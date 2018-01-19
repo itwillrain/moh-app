@@ -8,14 +8,16 @@ import App from './App.vue'
 import { fireBaseConfig } from './firebaseConfig'
 
 
-
 // Firebase初期化
 export const firebaseApp = firebase.initializeApp(fireBaseConfig);
 //ストレージのルートのリファレンスを取得
 var storageRef = firebase.storage().ref();
 //ストレージのルートにあるsample.pngのリファレンスを取得
 var imgSample = storageRef.child('images/dog03.jpg');
-console.log(imgSample.getDownloadURL())
+
+export const db = firebaseApp.database();
+
+
 
 
 // window.onload = function() {

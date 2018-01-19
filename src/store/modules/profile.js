@@ -47,7 +47,6 @@ const getters = {
 
 const actions = {
   setUsersRef : firebaseAction(({ bindFirebaseRef }, { ref }) => {
-    console.log(ref)
     bindFirebaseRef('user', ref)
   }),
 }

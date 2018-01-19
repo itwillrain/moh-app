@@ -72,6 +72,10 @@
 </script>
 <style lang="scss">
   @import "../../assets/sass/setting";
+  .profile-wrap {
+    max-width:$widthM;
+    margin:0 auto;
+  }
   .profile-photo-slide {
     max-width: $widthTab;
     margin: 0 auto;

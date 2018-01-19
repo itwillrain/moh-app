@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="wrapper">
     <pp-header></pp-header>
 
     <div class="container main-contents">
@@ -14,9 +14,10 @@
   import Header from './components/Header.vue'
   import Footer from './components/Footer.vue'
   import firebase from 'firebase'
-  import { firebaseApp } from './main'
+  import { firebaseApp, db } from './main'
   export const moment = require('moment');
   export const jquery = require('jQuery');
+
 
   export default {
     components: {
@@ -29,9 +30,9 @@
       }
     },
     created () {
-      const userID = firebase.auth().currentUser.uid
-      const db = firebaseApp.database()
-      const dbUsersRef = db.ref('/users/' + userID)
+      if (!firebase.auth().currentUser) return
+      const uid = firebase.auth().currentUser.uid
+      const dbUsersRef = db.ref('users/' + uid)
       const dbPartnersRef = db.ref('partners')
       this.$store.dispatch('setUsersRef', dbUsersRef)
       this.$store.dispatch('setPartnersRef', dbPartnersRef)
@@ -41,6 +42,12 @@
 
 <style lang="scss">
   @import "assets/sass/setting";
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    height:100%;
+  }
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -49,7 +56,7 @@
     color: #2c3e50;
   }
   .main-contents {
-    max-width: $widthTab;
+    width:100%;
     margin: 0 auto;
     text-align: left;
   }

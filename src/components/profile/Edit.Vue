@@ -1,8 +1,7 @@
 <template>
-  <form action="">
+ <div class="profile-edit">
+   <form action="">
     <h3 class="title is-5">プロフィール編集</h3>
-
-
     <div class="field">
       <label class="label">Username</label>
       <div class="control has-icons-left has-icons-right">
@@ -88,6 +87,7 @@
       </div>
     </div>
   </form>
+ </div>
 </template>
 
 <script>
@@ -172,3 +172,11 @@
     }
   }
 </script>
+
+<style lang="scss">
+  @import "../../assets/sass/setting.scss";
+  .profile-edit {
+    max-width: $widthM;
+    margin:0 auto;
+  }
+</style>

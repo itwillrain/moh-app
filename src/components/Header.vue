@@ -25,6 +25,9 @@
 <style lang="scss" scopped>
   @import "../assets/sass/setting";
   .header-nav {
+    position: sticky;
+    top:0;
+    z-index: 999;
     background-color: $primaryBgColor;
     .navbar-item {
       color: $linkLightColor;

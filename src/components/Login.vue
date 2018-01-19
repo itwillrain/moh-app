@@ -1,6 +1,6 @@
 <template>
 
-  <section class="Login-area">
+  <section class="login-area">
     <!--サインアウト中-->
     <div class="is-sign-out" v-if="!currentUser">
       <div class="field">
@@ -37,12 +37,12 @@
 
 <script>
   import { mapGetters } from 'vuex'
+  import firebase from 'firebase'
   export default  {
     data () {
       return {
         email: '',
         password: '',
-        message: ''
       }
     },
     computed: {
@@ -75,3 +75,20 @@
     }
   }
 </script>
+<style lang="scss">
+  @import "../assets/sass/setting";
+  .login-area {
+    padding: 1rem 2rem;
+    max-width:320px;
+    width: 100%;
+  }
+  @include break-at ($widthPC) {
+    .login-area {
+      overflow: visible;
+    }
+    .is-sign-in{
+      position: sticky;
+      top: 70px;
+    }
+  }
+</style>
