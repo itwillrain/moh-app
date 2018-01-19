@@ -31,7 +31,7 @@
             <div class="is-sign-in__card-wrap">
               <div class="is-sign-in__image">
                 <img v-if="getUser.photoUrl1" :src="getUser.photoUrl1" alt="">
-                <img src="http://placehold.jp/24/cccccc/ffffff/50x50.png" alt="" v-else>
+                <img src="https://placehold.jp/50x50.png?text=moh" v-else>
               </div>
               <div class="is-sign-in__info">
                 <p class="login-user"><i class="far fa-user-circle"></i><strong>{{ getUser.displayName }}</strong><span>({{ getUser.age }}歳)ちゃん</span></p>

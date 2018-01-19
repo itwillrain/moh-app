@@ -120,8 +120,8 @@
         firebase.database().ref('/users/' + this.currentUser.uid ).set(
           obj
         ).then( function() {
-          alert('Success')
-          router.push('/');
+          alert('編集が完了しました')
+          router.push('/profile/index');
         }).catch(function(error) {
           alert(error)
         })
