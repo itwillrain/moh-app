@@ -102,17 +102,6 @@
           { text: '男の子', value: 'male' },
           { text: '女の子', value: 'female' }
         ],
-//        user: {
-//          'displayName': firebase.auth().currentUser.displayName,
-//          'description': '',
-//          'age': '',
-//          'gender': '',
-//          'likes': [
-//            {
-//              'likedId': '',
-//            }
-//          ]
-//        }
       }
     },
     computed: {
@@ -123,12 +112,6 @@
         'getUser'
       ])
     },
-//    created () {
-//      const userID = firebase.auth().currentUser.uid
-//      const db = firebaseApp.database()
-//      const dbUsersRef = db.ref('/users/' + userID)
-//      this.$store.dispatch('setUsersRef', dbUsersRef)
-//    },
     methods: {
       saveUserProfile() {
         const obj = this.getUser
