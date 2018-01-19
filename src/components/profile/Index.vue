@@ -24,7 +24,6 @@
         <span class="gender">{{ setGender }}</span>
       </div>
       <div class="profile-info__sub">
-        <!--<span class="sex">オス</span>-->
         <span class="area">東京都</span>
       </div>
       <hr>
@@ -32,6 +31,9 @@
 
     <div class="profile-discription">
       <p>{{ getUser.description }}</p>
+    </div>
+    <div class="edit-button">
+      <router-link :to="{ name: 'profileEditLink' }" tag="button" class="button is-outlined is-info"">編集</router-link>
     </div>
   </div>
 </template>
@@ -74,7 +76,7 @@
   @import "../../assets/sass/setting";
   .profile-wrap {
     max-width:$widthM;
-    margin:0 auto;
+    margin:0 auto 4rem;
   }
   .profile-photo-slide {
     max-width: $widthTab;
@@ -107,5 +109,8 @@
   .breed {
     text-align: center;
     margin-bottom:.5rem;
+  }
+  .edit-button {
+    text-align: right;
   }
 </style>
