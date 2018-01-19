@@ -26,10 +26,22 @@
     <!--サインイン中-->
     <div class="is-sign-in" v-else>
       <div class="button-field">
-        <div class="control">
-          <p class="login-user"><strong>{{ getUser.displayName }}</strong>でログイン中 </p>
-          <button class="button is-info is-medium" @click="signOut">SIGN OUT</button>
-        </div>
+        <section class="is-sign-in__card">
+          <router-link :to="{ name: 'profileLink' }" tag="a" class="">
+          <div class="is-sign-in__card-wrap">
+            <div class="is-sign-in__image">
+              <img v-if="getUser.photoUrl1" :src="getUser.photoUrl1" alt="">
+              <img src="http://placehold.jp/24/cccccc/ffffff/50x50.png" alt="" v-else>
+            </div>
+            <div class="is-sign-in__info">
+              <p class="login-user"><i class="far fa-user-circle"></i><strong>{{ getUser.displayName }}</strong><span>({{ getUser.age }}歳)ちゃん</span></p>
+            </div>
+          </div>
+          </router-link>
+          <div class="control">
+            <button class="button is-info is-medium" @click="signOut">SIGN OUT</button>
+          </div>
+        </section>
       </div>
     </div>
   </section>
@@ -76,15 +88,47 @@
   }
 </script>
 <style lang="scss">
+  @import "~bulma/sass/utilities/initial-variables";
   @import "../assets/sass/setting";
   .login-area {
-    padding: 1rem 2rem;
     max-width:320px;
     width: 100%;
+    margin-bottom: 2rem;
+  }
+  .login-user {
+    margin-bottom:.5rem;
+    text-align: left;
+    color: $primaryColor;
+    padding-bottom:.2rem;
+    strong {
+      margin-left:.5rem;
+    }
+    span {
+      color: $black;
+    }
+  }
+  .is-sign-in {
+    width:100%;
+    &__card-wrap {
+      margin-bottom: .5rem;
+      display: flex;
+      justify-content: flex-start;
+      width:100%;
+      border-bottom:1px solid $borerColor;
+    }
+    &__image{
+      margin-right:.5rem;
+      img {
+        border-radius: 100%;
+        width:50px;
+        height:50px;
+      }
+    }
+
   }
   @include break-at ($widthPC) {
     .login-area {
-      overflow: visible;
+      padding: 1rem 2rem;
     }
     .is-sign-in{
       position: sticky;

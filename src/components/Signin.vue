@@ -183,6 +183,7 @@
 @include break-at($widthPC) {
   .main {
     display: flex;
+    justify-content: center;
   }
 }
 </style>
