@@ -1,0 +1,25 @@
+$secondaryColor: #ddd;
+$widthTab: 720px;
+//Color Settings
+$primaryColor: #00d1b2;
+$secondaryColor: #666;
+$lightGray: #666;
+$paleGray: #ddd;
+$isDone: $paleGray;
+$paleGray: #f2f2f2;
+$borerColor: #ddd;
+$wht: #fff;
+
+$primaryBgColor: #0e3741;
+$linkLightColor: #fff;
+
+$family-gothic: -apple-system,BlinkMacSystemFont,"Helvetica Neue","游ゴシック Medium",YuGothic,YuGothicM,"Hiragino Kaku Gothic ProN",メイリオ,Meiryo,sans-serif;
+// Use the new serif family
+$family-primary: $family-gothic;
+
+//	Breakpoints
+@mixin break-at($point) {
+  @media screen and (min-width: $point)  {
+    @content;
+  }
+}
