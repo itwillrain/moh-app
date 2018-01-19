@@ -9,12 +9,9 @@ const getters = {
 }
 
 const mutations = {
-  addLikeStatus(state, uid) {
-    console.log(state.partners);
-    if(state.partners['.key']) {
-      state.partners['.key'].isLiked = true
-    }
-  }
+  updatePartners(state, partners) {
+    state.partners = partners
+  },
 }
 
 const actions= {

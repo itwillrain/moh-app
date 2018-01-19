@@ -1,7 +1,7 @@
 <template>
   <main class="main">
     <div class="is-loggedin profile-card-list" v-if="currentUser">
-      <article class="profile-card" v-for="partner, idx in getPartners" :key="partner['.key']">
+      <article class="profile-card" v-for="partner, idx in refinedPartners" :key="partner['.key']">
         <div class="profile-wrap">
           <div class="profile-photo-slide">
             <carousel :perPage="1" paginationActiveColor="#42b983" paginationColor="#b2ebd1" :paginationSize='5' easing="linear">
@@ -50,7 +50,7 @@
 </template>
 <script>
   import firebase from 'firebase'
-  import { firebaseApp, dbPartnersRef, dbUsersRef } from '../main'
+  import { firebaseApp, db } from '../main'
   import { store } from '../store/index.js'
   import { mapGetters } from 'vuex'
   import { Carousel, Slide } from 'vue-carousel'
@@ -65,6 +65,7 @@
         password: '',
         message: '',
         applyStatus: 'Apply',
+        refineData: []
       }
     },
     components: {
@@ -75,6 +76,20 @@
     computed: {
       currentUser: function() {
         return this.$store.getters['auth/user'].auth
+      },
+      refinedPartners () {
+        this.refineData = this.getPartners
+        console.log(this.refineData)
+        this.refineData.every((e,i,arr)=> {
+          console.log(e)
+        })
+        this.refineData = this.getPartners
+        const refineData = this.refineData.filter((e,i,arr)=> {
+          if (e['.key'] !== this.getUser['.key']){
+            return e
+          }
+        })
+        return refineData
       },
       ...mapGetters([
         'getUser',
@@ -94,13 +109,28 @@
           this.applyStatus = 'Apply'
         }
         const uid = e.currentTarget.id
-        console.log(moment().format())
         const userID = firebase.auth().currentUser.uid
         firebase.database().ref('/users/' + userID + '/liked/' + uid).set(
           moment().format()
-        );
+        )
       },
+      setPartnerDate() {
+        db.ref('partners').push(this.getUser);
+      }
+
     },
+    created () {
+//      this.refineData = this.getPartners
+//      this.refineData.filter((value)=> {
+//        console.log(value['.key'])
+////        console.log(Object.keys(value))
+//      })
+//      this.refineData = this.getPartners
+//      this.refineData.every((e,i,arr)=> {
+//        console.log(e[i]['.key'])
+//      })
+
+    }
   }
 </script>
 
@@ -180,11 +210,11 @@
       }
     }
   }
-@include break-at($widthPC) {
-  .main {
-    display: flex;
-    justify-content: center;
+  @include break-at($widthPC) {
+    .main {
+      display: flex;
+      justify-content: center;
+    }
   }
-}
 </style>
 

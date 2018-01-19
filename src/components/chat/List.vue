@@ -32,6 +32,8 @@
   .chat-area {
   }
   .chat-list {
+    width: $widthM;
+    margin: 0 auto;
     li {
       border-bottom: 1px solid $borerColor;
       width: 100%;

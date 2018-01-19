@@ -25,8 +25,7 @@
     </div>
     <!--サインイン中-->
     <div class="is-sign-in" v-else>
-      <div class="button-field">
-        <section class="is-sign-in__card">
+        <section class="is-sign-in__card button-field">
           <router-link :to="{ name: 'profileLink' }" tag="a" class="">
             <div class="is-sign-in__card-wrap">
               <div class="is-sign-in__image">
@@ -43,7 +42,6 @@
           </div>
         </section>
       </div>
-    </div>
   </section>
 </template>
 
@@ -69,7 +67,8 @@
       signIn:function ()  {
         firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
           user => {
-            alert('success!')
+            console.log(user)
+            alert('ログインしました')
             this.$router.push('/')
           },
           err => {
@@ -79,7 +78,7 @@
       },
       signOut () {
         firebase.auth().signOut().then(function () {
-          alert('logged out');
+          alert('ログアウトしました');
         }).catch(function () {
           alert('error.');
         })
@@ -93,7 +92,12 @@
   .login-area {
     max-width:320px;
     width: 100%;
-    margin-bottom: 2rem;
+    margin: 0 auto 2rem;
+    .control {
+      .button {
+        margin-bottom:.5rem;
+      }
+    }
   }
   .login-user {
     margin-bottom:.5rem;
@@ -102,6 +106,7 @@
     padding-bottom:.2rem;
     strong {
       margin-left:.5rem;
+      color: $black;
     }
     span {
       color: $black;

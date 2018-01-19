@@ -1,5 +1,5 @@
 <template>
- <div class="profile-edit">
+ <div class="profile-edit-area">
    <form action="">
     <h3 class="title is-5">プロフィール編集</h3>
     <div class="field">
@@ -91,7 +91,7 @@
 
 <script>
   import firebase from 'firebase'
-  import { firebaseApp } from '../../main'
+  import { firebaseApp, db } from '../../main'
   import { mapGetters ,mapActions } from 'vuex'
 
   export default {
@@ -101,6 +101,7 @@
           { text: '男の子', value: 'male' },
           { text: '女の子', value: 'female' }
         ],
+        selectedUsers: []
       }
     },
     computed: {
@@ -108,7 +109,8 @@
         return this.$store.getters['auth/user']
       },
       ...mapGetters([
-        'getUser'
+        'getUser',
+        'getPartners'
       ])
     },
     methods: {
@@ -117,17 +119,16 @@
         const obj = this.getUser
         delete obj['.key']
         delete obj['.value']
-        firebase.database().ref('/users/' + this.currentUser.uid ).set(
+        db.ref('partners/' + this.currentUser.uid ).set(this.getUser);
+        db.ref('users/' + this.currentUser.uid ).set(
           obj
         ).then( function() {
           alert('編集が完了しました')
-          router.push('/profile/index');
+          router.push('/profile/');
         }).catch(function(error) {
           alert(error)
         })
-      },
-      updateUser () {
-        this.user = this.getUser.user
+
       },
       updateUserAge (e) {
         this.$store.commit('updateUserAge', e.target.value)
@@ -157,9 +158,9 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scopped>
   @import "../../assets/sass/setting.scss";
-  .profile-edit {
+  .profile-edit-area {
     max-width: $widthM;
     margin:0 auto;
   }
