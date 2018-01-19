@@ -28,15 +28,15 @@
       <div class="button-field">
         <section class="is-sign-in__card">
           <router-link :to="{ name: 'profileLink' }" tag="a" class="">
-          <div class="is-sign-in__card-wrap">
-            <div class="is-sign-in__image">
-              <img v-if="getUser.photoUrl1" :src="getUser.photoUrl1" alt="">
-              <img src="http://placehold.jp/24/cccccc/ffffff/50x50.png" alt="" v-else>
+            <div class="is-sign-in__card-wrap">
+              <div class="is-sign-in__image">
+                <img v-if="getUser.photoUrl1" :src="getUser.photoUrl1" alt="">
+                <img src="http://placehold.jp/24/cccccc/ffffff/50x50.png" alt="" v-else>
+              </div>
+              <div class="is-sign-in__info">
+                <p class="login-user"><i class="far fa-user-circle"></i><strong>{{ getUser.displayName }}</strong><span>({{ getUser.age }}歳)ちゃん</span></p>
+              </div>
             </div>
-            <div class="is-sign-in__info">
-              <p class="login-user"><i class="far fa-user-circle"></i><strong>{{ getUser.displayName }}</strong><span>({{ getUser.age }}歳)ちゃん</span></p>
-            </div>
-          </div>
           </router-link>
           <div class="control">
             <button class="button is-info is-medium" @click="signOut">SIGN OUT</button>

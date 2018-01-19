@@ -45,7 +45,6 @@
         </div>
       </div>
     </div>
-
     <div class="field">
       <label class="label">Age</label>
       <div class="control">
@@ -114,6 +113,7 @@
     },
     methods: {
       saveUserProfile() {
+        let router = this.$router;
         const obj = this.getUser
         delete obj['.key']
         delete obj['.value']
@@ -121,6 +121,7 @@
           obj
         ).then( function() {
           alert('Success')
+          router.push('/');
         }).catch(function(error) {
           alert(error)
         })
