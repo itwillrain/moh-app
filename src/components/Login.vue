@@ -33,13 +33,18 @@
                 <img src="https://placehold.jp/50x50.png?text=moh" v-else>
               </div>
               <div class="is-sign-in__info">
-                <p class="login-user"><i class="far fa-user-circle"></i><strong>{{ getUser.displayName }}</strong><span>({{ getUser.age }}歳)ちゃん</span></p>
+                <p class="login-user">
+                  <i class="far fa-user-circle"></i><strong>{{ getUser.displayName }}</strong><span>({{ getUser.age }}歳)ちゃん</span>
+                </p>
               </div>
             </div>
           </router-link>
           <div class="control">
             <button class="button is-info is-medium" @click="signOut">SIGN OUT</button>
           </div>
+          <ul>
+            <li v-for="user, idx in showLikedUser()" :key="user['.key']">Applyした犬:{{ user.displayName }}</li>
+          </ul>
         </section>
       </div>
   </section>
@@ -60,15 +65,29 @@
         return this.$store.getters['auth/user'].auth
       },
       ...mapGetters([
-        'getUser'
+        'getUser',
+        'getPartners'
       ])
     },
     methods: {
+      showLikedUser () {
+        let uidArray = this.getUser.liked
+        uidArray = Object.keys(uidArray)
+        console.log(uidArray)
+        let partnersData = this.getPartners
+        console.log(partnersData)
+        let newData = partnersData.filter((e)=> {
+          if( uidArray.includes(e['.key'])) {
+            return e
+          }
+        })
+        return newData
+      },
       signIn:function ()  {
         firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
           user => {
-            console.log(user)
-            alert('ログインしました')
+            console.log(user);
+            alert('ログインしました');
             this.$router.push('/')
           },
           err => {
@@ -83,6 +102,9 @@
           alert('error.');
         })
       },
+    },
+    created() {
+
     }
   }
 </script>

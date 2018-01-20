@@ -65,7 +65,6 @@
         password: '',
         message: '',
         applyStatus: 'Apply',
-        refineData: []
       }
     },
     components: {
@@ -79,16 +78,16 @@
       },
       refinedPartners () {
         this.refineData = this.getPartners
-        console.log(this.refineData)
-        this.refineData.every((e,i,arr)=> {
-          console.log(e)
-        })
-        this.refineData = this.getPartners
-        const refineData = this.refineData.filter((e,i,arr)=> {
+//        console.log(this.getUser['.key'])
+        let refineData = this.refineData.filter((e,i,arr)=> {
+//          console.log(e['.key'])
           if (e['.key'] !== this.getUser['.key']){
+//            console.warn(e['.key'])
             return e
           }
         })
+        this.refineData = refineData
+//        console.log(this.refineData)
         return refineData
       },
       ...mapGetters([
