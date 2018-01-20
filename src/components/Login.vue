@@ -71,6 +71,7 @@
     },
     methods: {
       showLikedUser () {
+        if(!this.getUser.liked) return
         let uidArray = this.getUser.liked
         uidArray = Object.keys(uidArray)
         console.log(uidArray)
