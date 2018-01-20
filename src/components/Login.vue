@@ -42,8 +42,9 @@
           <div class="control">
             <button class="button is-info is-medium" @click="signOut">SIGN OUT</button>
           </div>
+          <p>Applyした犬一覧</p>
           <ul>
-            <li v-for="user, idx in showLikedUser()" :key="user['.key']">Applyした犬:{{ user.displayName }}{{user.time}}</li>
+            <li v-for="user, idx in showLikedUser()" :key="user['.key']">{{ user.displayName }} <span>({{user.time}})</span></li>
           </ul>
         </section>
       </div>
