@@ -51,6 +51,7 @@
 </template>
 
 <script>
+  import {moment} from '../App.vue'
   import { mapGetters } from 'vuex'
   import firebase from 'firebase'
   export default  {
@@ -80,9 +81,11 @@
         //全データからLIKEしたユーザーを絞込
         let newData = partnersData.filter((e)=> {
           if( uidArray.includes(e['.key'])) {
-            let uid = e['.key']
+            const uid = e['.key']
+            const timeStamp = this.getUser.liked[uid]
+            const formatedTime = moment(timeStamp).format("YYYY-MM-DD HH:mm")
             //LIKEデータのタイムスタンプを追加
-            return e.time = this.getUser.liked[uid]
+            return e.time = formatedTime
           }
         })
 //        console.log(newData)
