@@ -43,7 +43,7 @@
             <button class="button is-info is-medium" @click="signOut">SIGN OUT</button>
           </div>
           <ul>
-            <li v-for="user, idx in showLikedUser()" :key="user['.key']">Applyした犬:{{ user.displayName }}</li>
+            <li v-for="user, idx in showLikedUser()" :key="user['.key']">Applyした犬:{{ user.displayName }}{{user.time}}</li>
           </ul>
         </section>
       </div>
@@ -74,14 +74,18 @@
         if(!this.getUser.liked) return
         let uidArray = this.getUser.liked
         uidArray = Object.keys(uidArray)
-        console.log(uidArray)
+//        console.log(uidArray)
         let partnersData = this.getPartners
-        console.log(partnersData)
+//        console.log(partnersData)
+        //全データからLIKEしたユーザーを絞込
         let newData = partnersData.filter((e)=> {
           if( uidArray.includes(e['.key'])) {
-            return e
+            let uid = e['.key']
+            //LIKEデータのタイムスタンプを追加
+            return e.time = this.getUser.liked[uid]
           }
         })
+//        console.log(newData)
         return newData
       },
       signIn:function ()  {
