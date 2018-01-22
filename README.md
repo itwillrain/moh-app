@@ -1,6 +1,10 @@
 # moh-prod
 
-> Moh app  
+> Moh app
+
+Vue cli + firebase
+
+VuexFire
 
 ## Build Setup
 
