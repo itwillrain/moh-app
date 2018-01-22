@@ -1,11 +1,9 @@
 <template>
   <div id="app" class="wrapper">
     <pp-header></pp-header>
-
     <div class="container main-contents">
       <router-view></router-view>
     </div>
-
     <pp-footer></pp-footer>
   </div>
 </template>
@@ -41,6 +39,7 @@
 
 <style lang="scss">
   @import "assets/sass/setting";
+
   .wrapper {
     display: flex;
     flex-direction: column;

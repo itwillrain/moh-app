@@ -1,5 +1,6 @@
 <template>
   <main class="main">
+
     <div class="is-loggedin profile-card-list" v-if="currentUser">
       <article class="profile-card" v-for="partner, idx in refinedPartners" :key="partner['.key']">
         <div class="profile-wrap">
@@ -128,8 +129,6 @@
       }
     },
     created () {
-
-
     }
   }
 </script>
@@ -139,7 +138,16 @@
   .main {
     display: block;
   }
-
+  .particles-js {
+    background-image: url(/static/img/sky.871d198.jpg);
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #363636;
+  }
   .profile-card-list {
     max-width: $widthM;
     margin:0 auto;

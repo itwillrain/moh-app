@@ -1,5 +1,6 @@
 require('./assets/sass/style.scss');
 import Vue from 'vue'
+import VueParticles from 'vue-particles'
 import firebase from 'firebase'
 import 'es6-promise/auto'
 import router from './router'
@@ -7,6 +8,7 @@ import store from './store'
 import App from './App.vue'
 import { fireBaseConfig } from './firebaseConfig'
 
+Vue.use(VueParticles)
 
 // Firebase初期化
 export const firebaseApp = firebase.initializeApp(fireBaseConfig);
