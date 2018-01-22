@@ -114,20 +114,17 @@
           moment().format()
         )
         //クリックしたUIDのユーザーデータからLIKE一覧を取得
-        let partnerData = this.getUser[targetUid]
         let targetRef = db.ref('users/' + targetUid)
         targetRef.once('value').then((snapshot)=> {
           const partnerData = snapshot.val()
           if(!partnerData.liked) return
           const targetLiked = partnerData.liked
           const checkMatchStatus = Object.keys(targetLiked).includes(userID)
+          console.log(checkMatchStatus)
           if(checkMatchStatus) {
-            this.$router.push('/match')
+            this.$router.push('/match?id=' + targetUid )
           }
         })
-
-
-
       }
     },
     created () {
@@ -213,7 +210,7 @@
       }
     }
   }
-  @include break-at($widthPC) {
+  @include break-at($widthPC){
     .main {
       display: flex;
       justify-content: center;

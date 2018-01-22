@@ -18,7 +18,6 @@
   export const moment = require('moment');
   export const jquery = require('jQuery');
 
-
   export default {
     components: {
       ppHeader: Header,
