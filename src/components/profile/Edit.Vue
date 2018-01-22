@@ -118,6 +118,7 @@
         let router = this.$router;
         const obj = this.getUser
         delete obj['.key']
+        delete obj['.value']
         db.ref('partners/' + this.currentUser.uid ).set(this.getUser);
         db.ref('users/' + this.currentUser.uid ).set(
           obj

@@ -18,12 +18,12 @@
             </carousel>
           </div>
           <div class="breed">
-            <span class="tag is-primary is-rounded">{{ partner.breed }}</span>
+            <span class="tag is-primary is-rounded" v-if="partner.breed">{{ partner.breed }}</span>
           </div>
           <div class="profile-info">
             <div class="profile-info__head">
               <span class="name">{{ partner.displayName }}</span>
-              <span class="age">({{ partner.age }}歳)</span>
+              <span class="age" v-if="partner.age">({{ partner.age }}歳)</span>
               <!--<span class="gender">{{ setGender }}</span>-->
             </div>
             <div class="profile-info__sub">
@@ -107,27 +107,31 @@
         if(this.applyStatus === 'Done' ){
           this.applyStatus = 'Apply'
         }
-        const uid = e.currentTarget.id
+        //クリックしたUIDを代入
+        const targetUid = e.currentTarget.id
         const userID = firebase.auth().currentUser.uid
-        firebase.database().ref('/users/' + userID + '/liked/' + uid).set(
+        db.ref('/users/' + userID + '/liked/' + targetUid).set(
           moment().format()
         )
-      },
-      setPartnerDate() {
-        db.ref('partners').push(this.getUser);
-      }
+        //クリックしたUIDのユーザーデータからLIKE一覧を取得
+        let partnerData = this.getUser[targetUid]
+        let targetRef = db.ref('users/' + targetUid)
+        targetRef.once('value').then((snapshot)=> {
+          const partnerData = snapshot.val()
+          if(!partnerData.liked) return
+          const targetLiked = partnerData.liked
+          const checkMatchStatus = Object.keys(targetLiked).includes(userID)
+          if(checkMatchStatus) {
+            alert(partnerData.displayName + 'ちゃんとmatchしました')
+          }
+        })
 
+
+
+      }
     },
     created () {
-//      this.refineData = this.getPartners
-//      this.refineData.filter((value)=> {
-//        console.log(value['.key'])
-////        console.log(Object.keys(value))
-//      })
-//      this.refineData = this.getPartners
-//      this.refineData.every((e,i,arr)=> {
-//        console.log(e[i]['.key'])
-//      })
+
 
     }
   }

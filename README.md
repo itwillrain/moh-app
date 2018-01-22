@@ -1,6 +1,6 @@
 # moh-prod
 
-> A Vue.js project
+> Moh app  
 
 ## Build Setup
 

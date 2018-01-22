@@ -42,10 +42,20 @@
           <div class="control">
             <button class="button is-info is-medium" @click="signOut">SIGN OUT</button>
           </div>
-          <p>Applyした犬一覧</p>
-          <ul>
-            <li v-for="user, idx in showLikedUser()" :key="user['.key']">{{ user.displayName }} <span>({{user.time}})</span></li>
-          </ul>
+          <div class="field liked-list">
+            <nav class="navbar" role="navigation" aria-label="dropdown navigation">
+              <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                  Applyした犬一覧<
+                </a>
+                <div class="navbar-dropdown">
+                  <a class="like-list-entry navbar-item" v-for="user, idx in showLikedUser()" :key="user['.key']">
+                    {{ user.displayName }} <span class="timestamp">({{user.time}})</span>
+                  </a>
+                </div>
+              </div>
+            </nav>
+          </div>
         </section>
       </div>
   </section>
@@ -160,7 +170,20 @@
         height:50px;
       }
     }
-
+  }
+  .liked-list {
+    &__title{
+      text-align: center;
+      padding:.5rem;
+      margin-bottom:.5rem;
+    }
+    span.timestamp {
+      font-size: 0.825rem;
+      color: $primaryColor;
+    }
+    .navbar-item {
+      width:100%;
+    }
   }
   @include break-at ($widthPC) {
     .login-area {
