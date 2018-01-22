@@ -4,6 +4,7 @@ import ChatList from '../components/chat/List.vue'
 import ChatDetail from '../components/chat/Detail.vue'
 import Signin from '../components/Signin.vue'
 import Signup from '../components/Signup.vue'
+import Match from '../components/Match.vue'
 const routes = [
   {
     path: '/profile/index',
@@ -38,6 +39,11 @@ const routes = [
     path: '/signup',
     name: 'signUpLink',
     component: Signup
+  },
+  {
+    path: '/match',
+    name: 'matchLink',
+    component: Match
   },
   {
     path: '*',

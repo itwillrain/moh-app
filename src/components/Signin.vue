@@ -122,7 +122,7 @@
           const targetLiked = partnerData.liked
           const checkMatchStatus = Object.keys(targetLiked).includes(userID)
           if(checkMatchStatus) {
-            alert(partnerData.displayName + 'ちゃんとmatchしました')
+            this.$router.push('/match')
           }
         })
 
