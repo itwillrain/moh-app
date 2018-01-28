@@ -2,7 +2,7 @@
   <main class="main">
     <div class="main__content">
       <img :src="targetUser.photoUrl1" v-if="targetUser.photoUrl1">
-      <img src="http://placehold.jp/24/cccccc/ffffff/150x150.png?text=moh-app.site" v-else>
+      <img src="http://placehold.jp/24/cccccc/ffffff/500x500.png?text=moh-app.site" v-else>
 
       <p>{{ targetUser.displayName }}ちゃんとマッチしました</p>
       <!--<img :src="" alt="">-->

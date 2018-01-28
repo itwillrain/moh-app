@@ -63,6 +63,7 @@
         } else {
           return '女の子'
         }
+
       }
     },
     components: {

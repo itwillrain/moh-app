@@ -2,7 +2,7 @@
   <main class="main">
 
     <div class="is-loggedin profile-card-list" v-if="currentUser">
-      <article class="profile-card" v-for="partner, idx in refinedPartners" :key="partner['.key']">
+      <article class="profile-card" v-for="partner, idx in refinedUsers" :key="partner['.key']">
         <div class="profile-wrap">
           <div class="profile-photo-slide">
             <carousel :perPage="1" paginationActiveColor="#42b983" paginationColor="#b2ebd1" :paginationSize='5' easing="linear">
@@ -25,18 +25,20 @@
             <div class="profile-info__head">
               <span class="name">{{ partner.displayName }}</span>
               <span class="age" v-if="partner.age">({{ partner.age }}歳)</span>
-              <!--<span class="gender">{{ setGender }}</span>-->
+
             </div>
             <div class="profile-info__sub">
               <!--<span class="sex">オス</span>-->
+              <span :class="genderClass(partner.gender)"
+                    class="gender">{{ setGender( partner.gender ) }}</span>
               <span class="area">東京都</span>
             </div>
             <hr>
           </div>
           <div class="control-button">
-            <button :class="{'is-liked': isLiked(partner['.key'])}"
+            <button :class="{'is-liked': isLiked(partner.key)}"
                     class="button is-danger is-outlined is-rounded"
-                    :id="partner['.key']"
+                    :id="partner['key']"
                     @click="updateUsersLiked">
               <i class="fas fa-heart"></i><span>{{ applyStatus }}</span></button>
           </div>
@@ -66,6 +68,7 @@
         password: '',
         message: '',
         applyStatus: 'Apply',
+        refinedUsers: []
       }
     },
     components: {
@@ -74,32 +77,51 @@
       mohLogin: Login
     },
     computed: {
+      ...mapGetters([
+        'getUser',
+        'getPartners'
+      ]),
+
       currentUser: function() {
         return this.$store.getters['auth/user'].auth
-      },
-      refinedPartners () {
-        this.refineData = this.getPartners
-//        console.log(this.getUser['.key'])
-        let refineData = this.refineData.filter((e,i,arr)=> {
-//          console.log(e['.key'])
-          if (e['.key'] !== this.getUser['.key']){
+      }
+    },
+    methods: {
+      showUsers(userData) {
+        console.dir(userData)
+        const refineArray = Object.values(userData).map((e,i,arr)=>{
+          e.key = Object.keys(userData)[i]
+          return e
+        })
+        console.dir(refineArray)
+        //自分のUIDを削除
+        this.refinedUsers = refineArray.filter((e,i,arr)=> {
+//          console.log(e.gender)
+          if (e['.key'] !== this.getUser['.key'] && e.gender !== this.getUser['gender'] && e.gender !== undefined  ){
 //            console.warn(e['.key'])
             return e
           }
         })
-        this.refineData = refineData
-//        console.log(this.refineData)
-        return refineData
       },
-      ...mapGetters([
-        'getUser',
-        'getPartners'
-      ])
-    },
-    methods: {
+      genderClass: (gender) => {
+        if(gender === 'female'){
+          return 'is-female'
+        }else{
+          return 'is-male'
+        }
+      },
       isLiked (uid) {
         if(!this.getUser.liked) return
         return Object.keys(this.getUser.liked).includes(uid);
+      },
+      setGender (gender) {
+        if(gender === 'female') {
+          return '女の子'
+        } else if(gender === 'male'){
+          return '男の子'
+        } else {
+          return '性別未登録'
+        }
       },
       updateUsersLiked (e) {
         if(this.applyStatus === 'Apply' ) {
@@ -115,26 +137,51 @@
           moment().format()
         )
         //クリックしたUIDのユーザーデータからLIKE一覧を取得
-        let targetRef = db.ref('users/' + targetUid)
+        const targetRef = db.ref('users/' + targetUid)
         targetRef.once('value').then((snapshot)=> {
           const partnerData = snapshot.val()
           if(!partnerData.liked) return
           const targetLiked = partnerData.liked
           const checkMatchStatus = Object.keys(targetLiked).includes(userID)
-          console.log(checkMatchStatus)
+//          console.log(checkMatchStatus)
           if(checkMatchStatus) {
-            this.$router.push('/match?id=' + targetUid )
+            const matchObj ={
+              id1: targetUid,
+              id2: userID,
+              createAt: moment().format()
+            }
+            //マッチテーブル追加
+            db.ref('match').once('value').then((snapshot)=>{
+              const keyArray = Object.keys(snapshot.val())
+              let hasMatch = ''
+              if( !keyArray.includes(userID + '_' + targetUid) && !keyArray.includes(targetUid + '_' + userID) ) {
+                db.ref('/match/' + userID + '_' + targetUid).set(matchObj)
+              }
+              this.$router.push('/match?id=' + targetUid )
+          })
           }
         })
+
       }
     },
-    created () {
+    beforeCreate () {
+      const users = db.ref('/users/')
+      users.once('value').then((snapshot)=>{
+        this.showUsers(snapshot.val())
+      })
     }
   }
 </script>
 
 <style lang="scss">
   @import "../assets/sass/setting";
+
+  .is-male {
+    color:$primaryColor;
+  }
+  .is-female{
+    color:hsl(348, 100%, 61%);
+  }
   .main {
     display: block;
   }
