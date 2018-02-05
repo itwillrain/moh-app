@@ -41,6 +41,7 @@
   @import "assets/sass/setting";
 
   .wrapper {
+    background-color: #f4f4f4;
     display: flex;
     flex-direction: column;
     min-height: 100vh;

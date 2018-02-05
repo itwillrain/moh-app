@@ -81,7 +81,6 @@
         'getUser',
         'getPartners'
       ]),
-
       currentUser: function() {
         return this.$store.getters['auth/user'].auth
       }
@@ -94,10 +93,10 @@
           return e
         })
         console.dir(refineArray)
-        //自分のUIDを削除
+        //自分のUIDを非表示
         this.refinedUsers = refineArray.filter((e,i,arr)=> {
 //          console.log(e.gender)
-          if (e['.key'] !== this.getUser['.key'] && e.gender !== this.getUser['gender'] && e.gender !== undefined  ){
+          if (e['.key'] !== this.getUser['.key'] && e.gender !== this.getUser['gender'] && e.gender !== undefined && this.getUser['breed'] === e.breed ){
 //            console.warn(e['.key'])
             return e
           }
