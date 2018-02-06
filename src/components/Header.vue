@@ -1,9 +1,9 @@
 <template>
   <nav class="header-nav navbar has-shadow" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <a class="navbar-item" href="/">
+      <router-link :to="{ name: 'signInLink' }" tag="a" class="navbar-item signin">
         <img src="../assets/images/logo-type.svg" alt="Moh" width="112" height="28">
-      </a>
+      </router-link>
       <router-link :to="{ name: 'profileLink' }" tag="a" class="navbar-item profile">
         <span class="icon is-small is-left"><i class="fas fa-user-circle"></i></span>
       </router-link>

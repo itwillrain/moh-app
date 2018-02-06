@@ -25,7 +25,6 @@
             <div class="profile-info__head">
               <span class="name">{{ partner.displayName }}</span>
               <span class="age" v-if="partner.age">({{ partner.age }}歳)</span>
-
             </div>
             <div class="profile-info__sub">
               <!--<span class="sex">オス</span>-->
@@ -57,8 +56,7 @@
   import { store } from '../store/index.js'
   import { mapGetters } from 'vuex'
   import { Carousel, Slide } from 'vue-carousel'
-  import { moment } from '../App.vue'
-  import { jquery } from '../App.vue'
+  import { moment,jquery } from '../App.vue'
   import Login from './Login.vue'
   export default {
     name: 'Signin',
@@ -142,7 +140,6 @@
           if(!partnerData.liked) return
           const targetLiked = partnerData.liked
           const checkMatchStatus = Object.keys(targetLiked).includes(userID)
-//          console.log(checkMatchStatus)
           if(checkMatchStatus) {
             const matchObj ={
               id1: targetUid,

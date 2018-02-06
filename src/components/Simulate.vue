@@ -5,38 +5,48 @@
         <img :src="targetUser.photoUrl1" v-if="targetUser.photoUrl1">
         <img src="http://placehold.jp/24/cccccc/ffffff/500x500.png?text=moh-app.site" v-else>
       </div>
-      <dl class="match-title">
-        <dt><img src="../assets/images/ico-heart.svg"></dt>
-        <dd><img src="../assets/images/ico-match-type.svg"></dd>
-      </dl>
-      <div class="introduction">
-        {{getUser.displayName}}と{{targetUser.displayName}}はマッチしました。
-        シミュレートしてみましょう！
+      <div class="matching-head">
+        <div class="my-profile profile-image">
+          <img :src="getUser.photoUrl1" alt="">
+        </div>
+        <div class="matching-head__icon">
+          <img src="../assets/images/ico-match.svg" alt="matching">
+        </div>
+        <div class="your-profile profile-image">
+          <img :src="targetUser.photoUrl1" alt="">
+        </div>
       </div>
-     <div class="simulation__buttom">
-       <button class="button is-danger is-outlined is-rounded"
-               @click="simulate">simulate
-       </button>
-     </div>
+      <div class="tab-content">
+        <ul class="tab-select">
+          <li class="active">犬種：柴犬</li>
+          <li>母親情報</li>
+          <li>父親情報</li>
+        </ul>
 
+        <section class="tab">
+          <img src="../assets/images/infograph.png">
+        </section>
+      </div>
+
+      <!--<img :src="" alt="">-->
     </div>
-    <moh-login></moh-login>
+
   </main>
+
 
 </template>
 
-)<script>
+<script>
   import Login from './Login.vue'
   import { db } from '../main'
   import { mapGetters } from 'vuex'
-  import { store } from '../store/index.js'
   export default {
     components: {
       mohLogin: Login
     },
     data () {
       return {
-        targetUser: '',
+        targetUser: ''
       }
     },
     computed: {
@@ -46,9 +56,7 @@
       ])
     },
     methods: {
-      simulate() {
-        this.$router.push('/simulate?id=' + this.uid )
-      }
+
     },
     created() {
 
@@ -59,7 +67,6 @@
       uid = uid.substring(1).split("&")
       uid = uid[0].split("=")
       uid = uid[1]
-      this.uid = uid
       let targetRef = db.ref('users/' + uid)
       console.log(targetRef)
       targetRef.once('value').then((snapshot)=> {
@@ -67,6 +74,7 @@
         console.log(partnerData)
         this.targetUser = partnerData
       })
+
     }
   }
 </script>

@@ -31,7 +31,12 @@
     <div class="field">
       <label class="label">犬種</label>
       <div class="control">
-        <input class="input" type="text" placeholder="" :value="getUser.breed" @input="updateUserBreed">
+        <div class="select">
+          <select :value="getUser.breed" @input="updateUserBreed">
+            <option value="" v-for="breed in breedOptions" :value="breed.value">{{ breed.text }}</option>
+          </select>
+        </div>
+        <!--<input class="input" type="text" placeholder="" :value="getUser.breed" @input="updateUserBreed">-->
       </div>
     </div>
 
@@ -101,7 +106,19 @@
           { text: '男の子', value: 'male' },
           { text: '女の子', value: 'female' }
         ],
-        selectedUsers: []
+        selectedUsers: [],
+        breedOptions:[
+          { text: '柴犬', value: '柴犬'},
+          { text: 'ラブラドール', value: 'ラブラドール' },
+          { text: 'ゴールデンレトリーバー', value: 'ゴールデンレトリーバー' },
+          { text: 'パグ', value: 'パグ' },
+          { text: 'ミニチュア・シュナウザー', value: 'ミニチュア・シュナウザー' },
+          { text: 'ボーダー・コリー', value: 'ボーダー・コリー' },
+          { text: 'チワワ', value: 'ポメラニアン'},
+          { text: 'ビーグル', value: 'ビーグル'},
+          { text: 'ボストン・テリア', value: 'ボストン・テリア' },
+          { text: 'ダックスフンド ', value: 'ダックスフンド' }
+        ]
       }
     },
     computed: {
