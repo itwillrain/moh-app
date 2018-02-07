@@ -133,6 +133,7 @@
     methods: {
       saveUserProfile() {
         let router = this.$router;
+        this.addUid(this.currentUser.uid)
         const obj = this.getUser
         delete obj['.key']
         delete obj['.value']
@@ -146,6 +147,9 @@
           alert(error)
         })
 
+      },
+      addUid (uid) {
+        this.$store.commit('addUid', uid)
       },
       updateUserAge (e) {
         this.$store.commit('updateUserAge', e.target.value)

@@ -1,38 +1,80 @@
 <template>
   <ul class="chat-list">
-    <li class="chat-info">
-      <router-link :to="{ name: 'chatDetailLink' }" tag="a">
+    <li class="chat-info" v-for="partner, idx in matchedUser" :key="partner['.key']">
+        <a @click="toDetail(partner.uid)" :id="partner.uid">
         <div class="thumb">
-          <img src="http://dummyimage.com/120x120" alt="">
+          <img v-if="partner.photoUrl1" :src="partner.photoUrl1" alt="">
+          <img src="http://placehold.jp/14/cccccc/ffffff/120x120.png?moh" alt="" v-else>
         </div>
         <div class="info">
-
-          <p class="name">はち</p>
+          <p class="name">{{partner.displayName}}</p>
           <p class="latest-message">Your latest message here</p>
         </div>
-      </router-link>
-    </li>
-
-    <li class="chat-info">
-      <a href="#">
-        <div class="thumb">
-          <img src="http://dummyimage.com/120x120" alt="">
-        </div>
-        <div class="info">
-          <p class="name">ポチ</p>
-          <p class="latest-message">Your latest message here</p>
-        </div>
-      </a>
+        </a>
     </li>
   </ul>
 </template>
+<script>
+  import firebase from 'firebase'
+  import { firebaseApp, db } from '../../main'
+  import { mapGetters ,mapActions } from 'vuex'
+  export default {
+    data() {
+      return {
+        matchedUser: []
+      }
+    },
+    computed: {
+      ...mapGetters([
+        'getUser',
+        'getPartners'
+      ])
+    },
+    methods: {
+      toDetail(e) {
+        console.log(e)
+        this.$router.push('/chat/detail?id=' + e)
+      }
+    },
+    created() {
 
+      const matchList = db.ref('match')
+      console.log(matchList)
+      matchList.once('value').then((snapshot)=> {
+        const matchData = snapshot.val()
+        const userID = firebase.auth().currentUser.uid
+        const obj = Object.values(matchData)
+        let itemsId = []
+        obj.forEach((e,i,arr) => {
+          if(e.id2 === userID ) {
+            itemsId.push(e.id1)
+          } else if(e.id1 === userID) {
+            itemsId.push(e.id2)
+          }
+        })
+        this.itemsId = itemsId
+       })
+
+      const usersdb = db.ref('/users/')
+      usersdb.once('value').then((snapshot)=> {
+        const users = snapshot.val()
+        console.log(users);
+        Object.keys(users).filter((e,i,arr)=> {
+          if(this.itemsId.includes(e)) {
+            this.matchedUser.push(Object.values(users)[i]);
+          }
+        })
+        console.log(this.matchedUser);
+      })
+    }
+  }
+</script>
 <style lang="scss" scopped>
   @import "../../assets/sass/setting";
   .chat-area {
   }
   .chat-list {
-    width: $widthM;
+    max-width: $widthM;
     margin: 0 auto;
     li {
       border-bottom: 1px solid $borerColor;
@@ -50,8 +92,10 @@
     }
     .thumb {
       img {
+        object-fit: cover;
         min-width:60px;
         width: 60px;
+        height:60px;
         -webkit-border-radius: 100%;
         -moz-border-radius: 100%;
         border-radius: 100%;

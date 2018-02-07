@@ -32,6 +32,9 @@ const mutations = {
   updateUserPhotoUrl3(state, userPhotoUrl3) {
     state.user.photoUrl3 = userPhotoUrl3
   },
+  addUid(state, uid) {
+    state.user.uid = uid
+  },
   updateUserLiked(state, uid) {
     const key = uid
     console.log(uid)
@@ -39,8 +42,6 @@ const mutations = {
     // state.user.liked = [{'uid': key, 'clickedAt': timeStamp}]
   }
 }
-
-
 const getters = {
   getUser: state => state.user
 }
