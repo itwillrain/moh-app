@@ -8,7 +8,7 @@
         </div>
         <div class="info">
           <p class="name">{{partner.displayName}}</p>
-          <p class="latest-message">Your latest message here</p>
+          <p class="latest-message" v-if="chatList"> {{ recentChat(partner.uid) }}</p>
         </div>
         </a>
     </li>
@@ -21,7 +21,9 @@
   export default {
     data() {
       return {
-        matchedUser: []
+        matchedUser: [],
+        chatList: '',
+        chat: 'chat'
       }
     },
     computed: {
@@ -32,14 +34,20 @@
     },
     methods: {
       toDetail(e) {
-        console.log(e)
         this.$router.push('/chat/detail?id=' + e)
+      },
+      recentChat(id){
+        const chatObj = Object.values(this.chatList).filter((e,i,arr) => {
+          if(e.fromId === id) {
+            return e
+          }
+        })
+        const currentOne = chatObj[0].chat;
+        return currentOne
       }
     },
-    created() {
-
+    beforeCreate() {
       const matchList = db.ref('match')
-      console.log(matchList)
       matchList.once('value').then((snapshot)=> {
         const matchData = snapshot.val()
         const userID = firebase.auth().currentUser.uid
@@ -54,17 +62,19 @@
         })
         this.itemsId = itemsId
        })
-
       const usersdb = db.ref('/users/')
       usersdb.once('value').then((snapshot)=> {
         const users = snapshot.val()
-        console.log(users);
         Object.keys(users).filter((e,i,arr)=> {
           if(this.itemsId.includes(e)) {
             this.matchedUser.push(Object.values(users)[i]);
           }
         })
-        console.log(this.matchedUser);
+      })
+      const chatdb = db.ref('/chat/')
+      chatdb.once('value').then((snapshot)=>{
+        const chat = snapshot.val()
+        this.chatList  = chat
       })
     }
   }
@@ -74,6 +84,7 @@
   .chat-area {
   }
   .chat-list {
+    background-color:$wht;
     max-width: $widthM;
     margin: 0 auto;
     li {
