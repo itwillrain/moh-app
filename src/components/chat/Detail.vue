@@ -38,8 +38,6 @@
         this.chat = ''
       },
       showChat(chatList) {
-        console.log(chatList)
-        console.log(this.userID)
         if(chatList.toId === this.sendId) {
           let myChat = {
              mychat: chatList.chat

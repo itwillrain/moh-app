@@ -8,7 +8,7 @@
         </div>
         <div class="info">
           <p class="name">{{partner.displayName}}</p>
-          <p class="latest-message" v-if="chatList"> {{ recentChat(partner.uid) }}</p>
+          <p class="latest-message" v-if="chatList"><i class="fas fa-reply"></i>{{ recentChat(partner.uid) }}</p>
         </div>
         </a>
     </li>
@@ -38,15 +38,19 @@
       },
       recentChat(id){
         const chatObj = Object.values(this.chatList).filter((e,i,arr) => {
-          if(e.fromId === id) {
+          if(e.fromId === id || e.toId === id) {
             return e
           }
         })
-        const currentOne = chatObj[0].chat;
-        return currentOne
+        if(chatObj) {
+          let num = chatObj.length -1
+          const currentOne = chatObj[num].chat;
+          return currentOne
+        }
+
       }
     },
-    beforeCreate() {
+    created() {
       const matchList = db.ref('match')
       matchList.once('value').then((snapshot)=> {
         const matchData = snapshot.val()
@@ -86,7 +90,7 @@
   .chat-list {
     background-color:$wht;
     max-width: $widthM;
-    margin: 0 auto;
+    margin: 0 auto .5rem;
     li {
       border-bottom: 1px solid $borerColor;
       width: 100%;
@@ -122,10 +126,9 @@
         font-size:14px;
         color: $lightGray;
         &::before {
-          content: '\f112';
-          font-family: FontAwesome;
-          display: inline-block;
-          margin-right: 0.5rem;
+        }
+        .fa-reply {
+          margin-right:.3rem;
         }
       }
     }
